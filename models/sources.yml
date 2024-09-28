@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+    - name: transformation_project
+      description: This is a replica of the Postgres database used by our app
+      database: raw
+      schema: landing
+      tables:
+          - name: departments
+            description: department id and name

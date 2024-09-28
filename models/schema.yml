@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: dim_departments
+    columns:
+      - name: dept_no
+        tests:
+          - unique
+          - not_null
