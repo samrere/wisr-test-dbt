@@ -7,3 +7,58 @@ models:
         tests:
           - unique
           - not_null
+
+  - name: dim_titles
+    columns:
+      - name: title_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_employees
+    columns:
+      - name: emp_no
+        tests:
+          - unique
+          - not_null
+      - name: sex
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['M', 'F']
+
+  - name: fact_emp_salary
+    description: "Fact table linking employees, departments, titles, and salary information"
+    columns:
+      - name: emp_skey
+        description: "Surrogate key linking to dim_employees"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_employees')
+              field: emp_skey
+      - name: dept_skey
+        description: "Surrogate key linking to dim_departments"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_departments')
+              field: dept_skey
+      - name: title_skey
+        description: "Surrogate key linking to dim_titles"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_titles')
+              field: title_skey
+      - name: hire_date_key
+        description: "Surrogate key linking to dim_time"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_time')
+              field: date_key
+      - name: salary
+        description: "Employee salary"
+        tests:
+          - not_null
