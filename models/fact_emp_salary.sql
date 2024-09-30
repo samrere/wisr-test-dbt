@@ -1,9 +1,13 @@
-{{ config(materialized='table') }}
+{{ 
+  config(
+    materialized = 'table'
+  ) 
+}}
 
 WITH source_data AS (
     SELECT
         emp_no,
-        emp_title_id as title_id,
+        emp_title_id AS title_id,
         TO_NUMBER(TO_CHAR(hire_date, 'YYYYMMDD')) AS hire_date_key
     FROM {{ source('raw', 'employees') }}
 ),
@@ -17,7 +21,7 @@ emp_dept_title_dim AS (
         title_skey,
         hire_date_key
     FROM source_data
-    join {{source("raw", 'dept_emp')}} using (emp_no)
+    JOIN {{ source("raw", 'dept_emp') }} USING (emp_no)
     JOIN {{ ref('dim_employees') }} USING (emp_no)
     JOIN {{ ref('dim_departments') }} USING (dept_no)
     JOIN {{ ref('dim_titles') }} USING (title_id)

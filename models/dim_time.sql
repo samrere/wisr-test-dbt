@@ -1,5 +1,8 @@
-{{ config(materialized='table') }}
-
+{{ 
+  config(
+    materialized = 'table'
+  ) 
+}}
 
 WITH date_range AS (
     SELECT 
@@ -11,7 +14,7 @@ WITH date_range AS (
 date_series AS (
     SELECT 
         DATEADD(day, seq4(), (SELECT start_date FROM date_range)) AS full_date
-    FROM table(generator(rowcount => 365 * 50))  -- Generate sufficient rows for ~50 years
+    FROM table(generator(rowcount => 365 * 50))  -- Generate rows for 50 years. More than enough
     WHERE DATEADD(day, seq4(), (SELECT start_date FROM date_range)) <= (SELECT end_date FROM date_range)
 )
 
@@ -22,3 +25,4 @@ SELECT
     EXTRACT(month FROM full_date) AS month,
     EXTRACT(day FROM full_date) AS day
 FROM date_series
+
