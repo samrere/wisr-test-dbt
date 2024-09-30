@@ -7,5 +7,5 @@ SELECT
     last_name,
     birth_date,
     sex,
-    CURRENT_DATE AS _write_date
+    CURRENT_TIMESTAMP() AS _write_time
 FROM {{ source('raw', 'employees') }}

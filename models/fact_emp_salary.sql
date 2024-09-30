@@ -47,5 +47,7 @@ SELECT
     title_skey,
     hire_date_key,
     is_manager,
-    salary
+    salary,
+    CURRENT_TIMESTAMP() AS _write_time
 FROM salary
+
